@@ -8,7 +8,7 @@ CORS(app)
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = ''
-app.config['MYSQL_DB'] = 'flask_db'  # Update the database name here
+app.config['MYSQL_DB'] = 'flask_db'  
 
 mysql = MySQL(app)
 
@@ -23,7 +23,7 @@ def submit():
     date = request.json['date']
     quote = request.json['quote']
     cursor = mysql.connection.cursor()
-    cursor.execute('INSERT INTO flaskdb (name, email, date, quote) VALUES (%s, %s, %s, %s)', (name, email, date, quote))  # Update the table name here
+    cursor.execute('INSERT INTO flaskdb (name, email, date, quote) VALUES (%s, %s, %s, %s)', (name, email, date, quote))  
     mysql.connection.commit()
     cursor.close()
     return jsonify({'message': 'Quote submitted successfully'})
@@ -31,7 +31,7 @@ def submit():
 @app.route('/quotes', methods=['GET'])
 def display_quotes():
     cursor = mysql.connection.cursor()
-    cursor.execute('SELECT * FROM flaskdb')  # Update the table name here
+    cursor.execute('SELECT * FROM flaskdb')  
     quotes = cursor.fetchall()
     cursor.close()
     return jsonify(quotes)
@@ -39,7 +39,7 @@ def display_quotes():
 @app.route('/quotes/<int:quote_id>', methods=['DELETE'])
 def delete_quote(quote_id):
     cursor = mysql.connection.cursor()
-    cursor.execute('DELETE FROM flaskdb WHERE id = %s', (quote_id,))  # Update the table name and column name here
+    cursor.execute('DELETE FROM flaskdb WHERE id = %s', (quote_id,)) 
     mysql.connection.commit()
     cursor.close()
     return jsonify({'message': 'Quote deleted successfully'})
